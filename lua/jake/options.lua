@@ -1,16 +1,17 @@
 local options = {
 	autoindent = true,
 	smartindent = true,
-	tabstop = 2,
-	shiftwidth = 2,
+	tabstop = 4,
+	shiftwidth = 4,
 	expandtab = true,
 	showtabline = 0,
 
 	number = true,
 	relativenumber = true,
 	numberwidth = 4,
+    syntax = "enable",
 
-  background = "dark",
+    termguicolors = true,
 
 }
 

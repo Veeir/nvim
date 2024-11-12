@@ -22,8 +22,11 @@ require("lazy").setup({
 {'L3MON4D3/LuaSnip'},
 {'nelsyeung/twig.vim'},
 {'bluz71/vim-moonfly-colors'},
+{'altercation/vim-colors-solarized'},
+{
+    'rebelot/kanagawa.nvim',
+},
 { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
-{ "nvim-treesitter/nvim-treesitter-context" },
 {
     "nvim-neo-tree/neo-tree.nvim",
     branch = "v3.x",
@@ -34,10 +37,14 @@ require("lazy").setup({
       -- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
     }
 },
-{'nvim-lualine/lualine.nvim'},
-{'nvim-telescope/telescope.nvim', tag = '0.1.6',
-  dependencies = { 'nvim-lua/plenary.nvim' }
-}
+{
+    'nvim-lualine/lualine.nvim',
+    dependencies = { 'nvim-tree/nvim-web-devicons' }
+},
+{
+    'nvim-telescope/telescope.nvim', tag = '0.1.8',
+      dependencies = { 'nvim-lua/plenary.nvim' }
+    }
 })
 
 
@@ -50,12 +57,43 @@ lsp_zero.on_attach(function(client, bufnr)
   lsp_zero.default_keymaps({buffer = bufnr})
 end)
 
-require'lspconfig'.tsserver.setup{}
 require'lspconfig'.html.setup{
   filetypes = {"html", "twig"}
 }
-require'lspconfig'.lua_ls.setup{}
 require'lspconfig'.pyright.setup{}
+require'lspconfig'.clangd.setup{}
+require'lspconfig'.ts_ls.setup{}
 require('lualine').setup {
   options = options
 }
+
+require('kanagawa').setup({
+    compile = false,             -- enable compiling the colorscheme
+    undercurl = true,            -- enable undercurls
+    commentStyle = { italic = true },
+    functionStyle = {},
+    keywordStyle = { italic = true},
+    statementStyle = { bold = true },
+    typeStyle = {},
+    transparent = false,         -- do not set background color
+    dimInactive = false,         -- dim inactive window `:h hl-NormalNC`
+    terminalColors = true,       -- define vim.g.terminal_color_{0,17}
+    colors = {                   -- add/modify theme and palette colors
+        palette = {},
+        theme = { wave = {}, lotus = {}, dragon = {}, all = {} },
+    },
+    overrides = function(colors) -- add/modify highlights
+        return {}
+    end,
+    theme = "wave",              -- Load "wave" theme when 'background' option is not set
+    background = {               -- map the value of 'background' option to a theme
+        dark = "dragon",           -- try "dragon" !
+        light = "lotus"
+    },
+})
+
+-- setup must be called before loading
+vim.cmd("colorscheme kanagawa")
+
+
+
